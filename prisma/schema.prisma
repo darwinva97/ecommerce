@@ -65,3 +65,59 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model ProductCategory {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    parent      String @db.ObjectId
+    image       String
+    description String
+
+    productIDs String[]  @db.ObjectId
+    products   Product[] @relation(fields: [productIDs], references: [id])
+
+    @@unique([name])
+}
+
+model ProductLabel {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    name  String
+    color String
+
+    productIDs String[]  @db.ObjectId
+    products   Product[] @relation(fields: [productIDs], references: [id])
+
+    @@unique([name])
+}
+
+model ProductVariant {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    name        String
+    description String
+
+    stock         Int
+    price         Float
+    offer_message String
+
+    product   Product @relation(fields: [productId], references: [id])
+    productId String  @db.ObjectId
+}
+
+model Product {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    name        String
+    description String
+
+    variants ProductVariant[]
+
+    categoryIDs String[]          @db.ObjectId
+    categories  ProductCategory[] @relation(fields: [categoryIDs], references: [id])
+
+    labelIDs String[]       @db.ObjectId
+    labels   ProductLabel[] @relation(fields: [labelIDs], references: [id])
+
+    @@unique([name])
+}
