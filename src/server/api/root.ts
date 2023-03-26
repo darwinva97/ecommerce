@@ -3,6 +3,8 @@ import { exampleRouter } from "@/server/api/routers/example";
 import { productRouter } from "@/server/api/routers/product";
 import { categoryRouter } from "@/server/api/routers/category";
 import { labelRouter } from "@/server/api/routers/label";
+import { variantRouter } from "@/server/api/routers/variant";
+import { carouselRouter } from "@/server/api/routers/carousel";
 
 /**
  * This is the primary router for your server.
@@ -13,7 +15,9 @@ export const appRouter = createTRPCRouter({
   example: exampleRouter,
   product: productRouter,
   category: categoryRouter,
-  label: labelRouter
+  label: labelRouter,
+  variant: variantRouter,
+  carousel: carouselRouter
 });
 
 // export type definition of API

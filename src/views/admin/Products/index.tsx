@@ -10,6 +10,10 @@ export const AdminProductsView = () => {
     <tr key={product.id}>
       <td>{index + 1}</td>
       <td>{product.name}</td>
+      <td>{product.categories.map(cat => cat.name).join(", ")}</td>
+      <td>{product.labels.map(l => l.name).join(", ")}</td>
+      <td>{product.variants.map(v => v.name).join(", ")}</td>
+      <td>{product.variants.reduce((sum, v) => sum+v.stock, 0)}</td>
       <td>
         <Button
           mr="sm"
@@ -34,6 +38,10 @@ export const AdminProductsView = () => {
           <tr>
             <th>Nº</th>
             <th>Name</th>
+            <th>Categories</th>
+            <th>Labels</th>
+            <th>Variants</th>
+            <th>Stock</th>
             <th>Actions</th>
           </tr>
         </thead>

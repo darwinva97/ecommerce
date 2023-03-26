@@ -1,40 +1,36 @@
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { type TCreateLabel } from "@/types/label";
+import { type TCreateCarousel } from "@/types/carousel";
 import { api } from "@/utils/api";
 
-export const BtnCreateLabel = () => {
-  const createMutation = api.label.create.useMutation();
+export const BtnCreateCarousel = () => {
+  const createMutation = api.carousel.create.useMutation();
   const [opened, { open, close }] = useDisclosure(false);
-  const form = useForm<TCreateLabel>({
+  const form = useForm<TCreateCarousel>({
     initialValues: {
       name: "",
-      color: "",
-      slug: "",
     },
   });
 
-  const onSubmit = async (value: TCreateLabel) => {
+  const onSubmit = async (value: TCreateCarousel) => {
     await createMutation.mutateAsync(value);
     close();
   };
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Create Label">
+      <Modal opened={opened} onClose={close} title="Create Carousel">
         <form onSubmit={form.onSubmit((data) => void onSubmit(data))}>
           <TextInput label="name" {...form.getInputProps("name")} />
-          <TextInput label="color" {...form.getInputProps("color")} />
-          <TextInput label="slug" {...form.getInputProps("slug")} />
           <Button type="submit" mt="sm">
-            Create Label
+            Create Carousel
           </Button>
         </form>
       </Modal>
 
       <Group position="center">
-        <Button onClick={open}>Create Label</Button>
+        <Button onClick={open}>Create Carousel</Button>
       </Group>
     </>
   );

@@ -5,8 +5,11 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { ZCreateProduct } from "@/types/product";
-import { Product } from "@prisma/client";
+import  {
+  type TUpdateProduct,
+  ZCreateProduct,
+  ZUpdateProduct,
+} from "@/types/product";
 
 export const productRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
@@ -36,12 +39,16 @@ export const productRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       return ctx.prisma.product.create({ data: input });
     }),
-    
-  create2: protectedProcedure
-  .input(ZCreateProduct)
-  .mutation(async ({ ctx, input }) => {
-    // const category = await ctx.prisma.productCategory.create({});
-    const newProduct: Product = await ctx.prisma.product.create({ data: input });
-    return newProduct
-  }),
+
+  update: protectedProcedure
+    .input(ZUpdateProduct)
+    .mutation(({ ctx, input }) => {
+      const data: Omit<TUpdateProduct, "id"> & { id?: string } = { ...input };
+      delete data?.id;
+
+      return ctx.prisma.product.update({
+        data,
+        where: { id: input.id },
+      });
+    }),
 });

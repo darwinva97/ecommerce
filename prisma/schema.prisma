@@ -81,7 +81,7 @@ model ProductCategory {
     description String
     slug        String
 
-    parent String? // id of other ProductCategory
+    parent String? // id of other ProductCategory @db.ObjectId
 
     productIDs String[]  @db.ObjectId
     products   Product[] @relation(fields: [productIDs], references: [id])
@@ -107,9 +107,11 @@ model ProductVariant {
 
     name        String
     description String
+    image       String
 
     stock         Int
     price         Float
+    offer_price   Float
     offer_message String
 
     product   Product @relation(fields: [productId], references: [id])
@@ -130,6 +132,31 @@ model Product {
 
     labelIDs String[]       @db.ObjectId
     labels   ProductLabel[] @relation(fields: [labelIDs], references: [id])
+
+    @@unique([name])
+}
+
+model Carousel {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    name String
+
+    items CarouselItem[]
+
+    @@unique([name])
+}
+
+model CarouselItem {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    name  String
+    url   String?
+    image String?
+    html  String?
+
+    carousel Carousel @relation(fields: [carouselId], references: [id])
+
+    carouselId String @db.ObjectId
 
     @@unique([name])
 }

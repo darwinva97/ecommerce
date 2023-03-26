@@ -46,7 +46,6 @@ export const UserMenu = () => {
 
         <Menu.Item
           icon={<IconSettings size={14} />}
-          onClick={() => void router.push("/account")}
         >
           <ActionIcon
             variant="outline"

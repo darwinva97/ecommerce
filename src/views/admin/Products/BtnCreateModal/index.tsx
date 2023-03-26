@@ -21,7 +21,6 @@ export const BtnCreateModal = () => {
   });
 
   const onSubmit = async (value: TCreateProduct) => {
-    console.log(value);
     await createMutation.mutateAsync(value);
     close();
   };

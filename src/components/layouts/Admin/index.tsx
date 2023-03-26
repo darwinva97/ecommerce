@@ -60,6 +60,9 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
             <NavLink href="/admin/order" label={"Orders"} component={Link} />
           </Navbar.Section>
           <Navbar.Section my={"sm"}>
+            <NavLink href="/admin/home-config" label={"Home"} component={Link} />
+          </Navbar.Section>
+          <Navbar.Section my={"sm"}>
             <NavLink href="/admin/users" label={"Users"} component={Link} />
           </Navbar.Section>
 
@@ -76,8 +79,8 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
            <Divider></Divider>
            */}
           <Navbar.Section>
-            <Button onClick={() => void signOut()}>Logout</Button>
-            {/* <NavLink href="/admin/dashboard" label={"Support"} component={Link} /> */}
+            {/* <Button onClick={() => void signOut()}>Logout</Button> */}
+            <NavLink href="/" label={"Back to Website"} component={Link} />
           </Navbar.Section>
         </Navbar>
       }
