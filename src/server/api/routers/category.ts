@@ -5,21 +5,25 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
+import { ZCreateCategory } from "@/types/category";
 
-export const exampleRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
+export const categoryRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
+    return ctx.prisma.productCategory.findMany({
+      include: {
+        products: true,
+      },
+    });
   }),
 
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  create: protectedProcedure
+    .input(ZCreateCategory)
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.productCategory.create({
+        data: {
+          ...input,
+          parent: "",
+        },
+      });
+    }),
 });

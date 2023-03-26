@@ -77,10 +77,11 @@ model VerificationToken {
 model ProductCategory {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     name        String
-    parent      String @db.ObjectId
     image       String
     description String
     slug        String
+
+    parent String? // id of other ProductCategory
 
     productIDs String[]  @db.ObjectId
     products   Product[] @relation(fields: [productIDs], references: [id])

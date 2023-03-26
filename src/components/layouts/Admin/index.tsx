@@ -51,6 +51,12 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
             />
           </Navbar.Section>
           <Navbar.Section my={"sm"}>
+            <NavLink href="/admin/category" label={"Categories"} component={Link} />
+          </Navbar.Section>
+          <Navbar.Section my={"sm"}>
+            <NavLink href="/admin/label" label={"Labels"} component={Link} />
+          </Navbar.Section>
+          <Navbar.Section my={"sm"}>
             <NavLink href="/admin/order" label={"Orders"} component={Link} />
           </Navbar.Section>
           <Navbar.Section my={"sm"}>
@@ -93,7 +99,6 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
             <Group w="100%" position="apart">
               <Link href="/admin/dashboard">Dashboard</Link>
               <Group>
-                <Button>Crear</Button>
                 <BtnAccount />
               </Group>
             </Group>
