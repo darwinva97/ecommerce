@@ -8,6 +8,6 @@ export const BtnAccount = () => {
   return sessionData ? (
     <UserMenu />
   ) : (
-    <Button onClick={() => void signIn("github")}>Login</Button>
+    <Button onClick={() => void signIn("google")}>Login</Button>
   );
 };
