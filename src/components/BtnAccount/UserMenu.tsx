@@ -24,7 +24,13 @@ export const UserMenu = () => {
       <Menu.Dropdown>
         <Menu.Item
           icon={<IconSettings size={14} />}
-          onClick={() => void router.push("/account")}
+          onClick={() =>
+            void router.push(
+              sessionData?.user?.role === "Admin"
+                ? "/admin/account"
+                : "/account"
+            )
+          }
         >
           Account
         </Menu.Item>

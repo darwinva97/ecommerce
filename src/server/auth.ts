@@ -3,6 +3,7 @@ import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
+  User,
 } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -38,21 +39,26 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user }) {
+      if (!token) token = {};
       user && (token.user = user);
       return token;
     },
     session(props) {
       const { session, user, token } = props;
+
       if (session.user) {
         session.user.id = user.id;
+
         // session.user = token.user;  // Setting token in session
-        // session.user.role = user.role; <-- put other properties on the session here
+        session.user.role = (
+          user as User & { role: "Owner" | "Admin" | "Client" }
+        ).role as string; // put other properties on the session here
       }
-      return session;
-      // return {
-      //   ...session,
-      //   token,
-      // };
+      // return session;
+      return {
+        ...session,
+        token,
+      };
     },
   },
   adapter: PrismaAdapter(prisma),

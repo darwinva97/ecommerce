@@ -1,6 +1,7 @@
 import { AdminLayout } from "@/components/layouts/Admin";
 import type { CustomPageComponent } from "@/pages/_app";
 import { api } from "@/utils/api";
+import { AdminProductView } from "@/views/admin/Product";
 import { Box, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 
@@ -11,8 +12,10 @@ const AdminProductPage: CustomPageComponent = () => {
   });
   return (
     <Box>
-      <Title>{product?.name}</Title>
-      <Text>{product?.description}</Text>
+      <Title>
+        {product?.name} ({product?.id})
+      </Title>
+      <AdminProductView />
     </Box>
   );
 };
