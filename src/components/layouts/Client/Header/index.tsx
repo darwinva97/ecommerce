@@ -16,6 +16,7 @@ import { useState, type RefAttributes } from "react";
 import { sign } from "crypto";
 import { signIn } from "next-auth/react";
 import { BtnAccount } from "@/components/BtnAccount";
+import { api } from "@/utils/api";
 
 export const Links = ({
   setShowSearch,
@@ -24,6 +25,8 @@ export const Links = ({
   openCart,
   ...props
 }: any) => {
+  const { data: categories } = api.category.getAll.useQuery();
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const finalProps: RefAttributes<HTMLAnchorElement> = {
     ...props,
@@ -35,13 +38,12 @@ export const Links = ({
   };
   return (
     <Group>
-      <Link href="/category/woman" {...finalProps}>
-        Mujer
-      </Link>
-      <Link href="/category/man" {...finalProps}>
-        Hombre
-      </Link>
-
+      {(categories || [])?.map((cat) => (
+        <Link key={cat.id} href={"/" + cat.slug} {...finalProps}>
+          {cat.name}
+        </Link>
+      ))}
+      
       <ActionIcon
         variant="transparent"
         color={"blue"}

@@ -59,10 +59,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     },
   });
+  if (!product) {
+    return {
+      notFound: true,
+      revalidate: 15
+    }
+  }
   return {
     props: {
       product,
     },
+    revalidate: 15
   };
 };
 
