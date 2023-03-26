@@ -11,6 +11,7 @@ import {
   Tabs,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import type { CarouselItem } from "@prisma/client";
 import Image from "next/image";
 import { BtnCreateCarousel } from "./BtnCreateCarousel";
 import { BtnCreateCarouselItem } from "./BtnCreateCarouselItem";
