@@ -4,7 +4,7 @@ import { BtnCreateCategory } from "./BtnCreateCategory";
 
 export const AdminCategoriesView = () => {
   const { data: categories } = api.category.getAll.useQuery();
-  
+  console.log(categories)
   const rows = (categories || []).map((category, index) => (
     <tr key={category.id}>
       <td>{index + 1}</td>

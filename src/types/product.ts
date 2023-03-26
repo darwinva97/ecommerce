@@ -1,3 +1,9 @@
+import {
+  Product,
+  ProductCategory,
+  ProductLabel,
+  ProductVariant,
+} from "@prisma/client";
 import { z } from "zod";
 
 export const ZUpdateProduct = z.object({
@@ -6,17 +12,32 @@ export const ZUpdateProduct = z.object({
   name: z.string(),
   slug: z.string(),
   categoryIDs: z.array(z.string()),
-  labelIDs: z.array(z.string())
+  labelIDs: z.array(z.string()),
 });
-export type TUpdateProduct = z.infer<typeof ZUpdateProduct>
-
+export type TUpdateProduct = z.infer<typeof ZUpdateProduct>;
 
 export const ZCreateProduct = z.object({
   description: z.string(),
   name: z.string(),
   slug: z.string(),
   categoryIDs: z.array(z.string()),
-  labelIDs: z.array(z.string())
+  labelIDs: z.array(z.string()),
 });
 
-export type TCreateProduct = z.infer<typeof ZCreateProduct>
+export type TCreateProduct = z.infer<typeof ZCreateProduct>;
+
+export type TFillProduct = Product & {
+  variants: ProductVariant[];
+  categories: (ProductCategory & {
+    products: (Product & {
+      variants: ProductVariant[];
+      categories: ProductCategory[];
+    })[];
+  })[];
+  labels: (ProductLabel & {
+    products: (Product & {
+      variants: ProductVariant[];
+      categories: ProductCategory[];
+    })[];
+  })[];
+};

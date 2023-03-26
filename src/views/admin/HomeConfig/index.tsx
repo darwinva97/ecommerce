@@ -54,7 +54,7 @@ const Form = (props: TUpdateCarouselItem) => {
 const Items = ({ items }: { items: CarouselItem[] }) => {
   console.log(items);
   return (
-    <Tabs defaultValue="gallery">
+    <Tabs defaultValue={String(items[0]?.name)}>
       <Tabs.List>
         {items.map((item) => (
           <Tabs.Tab value={item.name} key={item.id}>

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import {
   createTRPCRouter,
   publicProcedure,
@@ -13,6 +15,18 @@ export const labelRouter = createTRPCRouter({
       },
     });
   }),
+
+  getDetail: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      const id = input.id;
+      return ctx.prisma.productLabel.findFirst({
+        where: { id },
+        include: {
+          products: true,
+        },
+      });
+    }),
 
   create: protectedProcedure
     .input(ZCreateLabel)
