@@ -47,6 +47,12 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum UserRole {
+    Owner
+    Admin
+    Client
+}
+
 model User {
     id            String    @id @default(auto()) @map("_id") @db.ObjectId
     name          String?
@@ -55,6 +61,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+
+    role UserRole @default(Client)
 }
 
 model VerificationToken {
@@ -72,6 +80,7 @@ model ProductCategory {
     parent      String @db.ObjectId
     image       String
     description String
+    slug        String
 
     productIDs String[]  @db.ObjectId
     products   Product[] @relation(fields: [productIDs], references: [id])
@@ -84,6 +93,7 @@ model ProductLabel {
 
     name  String
     color String
+    slug  String
 
     productIDs String[]  @db.ObjectId
     products   Product[] @relation(fields: [productIDs], references: [id])
@@ -109,6 +119,7 @@ model Product {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     name        String
+    slug        String
     description String
 
     variants ProductVariant[]

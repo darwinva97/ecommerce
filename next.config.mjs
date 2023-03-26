@@ -18,5 +18,13 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'picsum.photos',
+      },
+    ],
+  },
 };
 export default config;

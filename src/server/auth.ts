@@ -37,12 +37,22 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session, user }) {
+    jwt({ token, user }) {
+      user && (token.user = user);
+      return token;
+    },
+    session(props) {
+      const { session, user, token } = props;
       if (session.user) {
         session.user.id = user.id;
+        // session.user = token.user;  // Setting token in session
         // session.user.role = user.role; <-- put other properties on the session here
       }
       return session;
+      // return {
+      //   ...session,
+      //   token,
+      // };
     },
   },
   adapter: PrismaAdapter(prisma),
