@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import {
   AppShell,
@@ -8,22 +8,36 @@ import {
   Burger,
   useMantineTheme,
   Group,
-  ActionIcon,
   useMantineColorScheme,
-  Button,
   ScrollArea,
   NavLink,
 } from "@mantine/core";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { BtnAccount } from "@/components/BtnAccount";
+import { useRouter } from "next/router";
 
 export const AdminLayout = ({ children }: { children: ReactNode }) => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { colorScheme } = useMantineColorScheme();
 
+  const { data: sessionData } = useSession();
+  const router = useRouter();
+
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+
+  useEffect(() => {
+    if (sessionData?.user?.role !== "Admin") {
+      void router.push("/");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionData?.user?.role]);
+
+  if (sessionData?.user?.role !== "Admin") {
+    return null;
+  }
+
   return (
     <AppShell
       styles={{
@@ -51,7 +65,11 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
             />
           </Navbar.Section>
           <Navbar.Section my={"sm"}>
-            <NavLink href="/admin/category" label={"Categories"} component={Link} />
+            <NavLink
+              href="/admin/category"
+              label={"Categories"}
+              component={Link}
+            />
           </Navbar.Section>
           <Navbar.Section my={"sm"}>
             <NavLink href="/admin/label" label={"Labels"} component={Link} />
@@ -60,7 +78,11 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
             <NavLink href="/admin/order" label={"Orders"} component={Link} />
           </Navbar.Section>
           <Navbar.Section my={"sm"}>
-            <NavLink href="/admin/home-config" label={"Home"} component={Link} />
+            <NavLink
+              href="/admin/home-config"
+              label={"Home"}
+              component={Link}
+            />
           </Navbar.Section>
           <Navbar.Section my={"sm"}>
             <NavLink href="/admin/users" label={"Users"} component={Link} />

@@ -1,4 +1,11 @@
-import { Menu, Button, ActionIcon, useMantineColorScheme } from "@mantine/core";
+import {
+  Menu,
+  Button,
+  ActionIcon,
+  useMantineColorScheme,
+  Group,
+  Text,
+} from "@mantine/core";
 import {
   IconMoonStars,
   IconSettings,
@@ -18,7 +25,7 @@ export const UserMenu = () => {
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <Button>{sessionData?.user.name}</Button>
+        <Button>{sessionData?.user.name?.split(" ")[0]}</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -35,7 +42,7 @@ export const UserMenu = () => {
           Account
         </Menu.Item>
 
-        {sessionData && (
+        {sessionData?.user?.role === "Admin" && (
           <Menu.Item
             icon={<IconSettings size={14} />}
             onClick={() => void router.push("/admin")}
@@ -44,17 +51,17 @@ export const UserMenu = () => {
           </Menu.Item>
         )}
 
-        <Menu.Item
-          icon={<IconSettings size={14} />}
-        >
-          <ActionIcon
-            variant="outline"
-            color={dark ? "yellow" : "blue"}
-            onClick={() => toggleColorScheme()}
-            title="Toggle color scheme"
-          >
-            {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
-          </ActionIcon>
+        <Menu.Item onClick={() => toggleColorScheme()}>
+          <Group>
+            <Text>Theme</Text>
+            <ActionIcon
+              variant="outline"
+              color={dark ? "yellow" : "blue"}
+              title="Toggle color scheme"
+            >
+              {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
+            </ActionIcon>
+          </Group>
         </Menu.Item>
 
         <Menu.Divider />

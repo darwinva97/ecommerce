@@ -28,8 +28,10 @@ import type { GetServerSidePropsContext } from "next";
 
 export const requireClientSession = async (ctx: GetServerSidePropsContext) => {
   const session = await getServerAuthSession(ctx);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const sessionProps = JSON.parse(JSON.stringify(session));
 
-  if (!session) {
+  if (!sessionProps) {
     return {
       redirect: {
         destination: "/",
@@ -40,7 +42,8 @@ export const requireClientSession = async (ctx: GetServerSidePropsContext) => {
 
   return {
     props: {
-      session,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      sessionProps: sessionProps,
     },
   };
 };
