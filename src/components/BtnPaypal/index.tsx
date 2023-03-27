@@ -14,7 +14,9 @@ export const BtnPaypal = () => {
           void (await actions?.order?.capture());
         }}
         style={{ layout: "horizontal", color: "blue" }}
-      />
+      >
+        Hola
+      </PayPalButtons>
     </PayPalScriptProvider>
   );
 };
