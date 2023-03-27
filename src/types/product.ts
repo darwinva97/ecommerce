@@ -1,4 +1,4 @@
-import {
+import type {
   Product,
   ProductCategory,
   ProductLabel,
@@ -6,7 +6,7 @@ import {
 } from "@prisma/client";
 import { z } from "zod";
 
-export const ZUpdateProduct = z.object({
+export const ZModelProduct = z.object({
   id: z.string(),
   description: z.string(),
   name: z.string(),
@@ -14,6 +14,10 @@ export const ZUpdateProduct = z.object({
   categoryIDs: z.array(z.string()),
   labelIDs: z.array(z.string()),
 });
+
+export type TModelProduct = z.infer<typeof ZModelProduct>;
+
+export const ZUpdateProduct = ZModelProduct;
 export type TUpdateProduct = z.infer<typeof ZUpdateProduct>;
 
 export const ZCreateProduct = z.object({

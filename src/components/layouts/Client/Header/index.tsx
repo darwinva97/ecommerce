@@ -10,6 +10,7 @@ import {
   ActionIcon,
   Box,
   Button,
+  Drawer,
 } from "@mantine/core";
 import { IconSearch, IconShoppingCart } from "@tabler/icons-react";
 import { useState, type RefAttributes } from "react";
@@ -17,6 +18,8 @@ import { sign } from "crypto";
 import { signIn } from "next-auth/react";
 import { BtnAccount } from "@/components/BtnAccount";
 import { api } from "@/utils/api";
+import { useStore } from "@/store";
+import { Cart } from "./Cart";
 
 export const Links = ({
   setShowSearch,
@@ -43,14 +46,14 @@ export const Links = ({
           {cat.name}
         </Link>
       ))}
-      
-      <ActionIcon
+
+      {/* <ActionIcon
         variant="transparent"
         color={"blue"}
         onClick={() => setShowSearch(!showSearch)}
       >
         <IconSearch size={24} />
-      </ActionIcon>
+      </ActionIcon> */}
       <ActionIcon
         variant="transparent"
         color={"blue"}
@@ -66,7 +69,7 @@ export const Links = ({
 
 export const Header = () => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
-  const [openCart, setOpenCart] = useState<boolean>(false);
+  const { openCart, setOpenCart } = useStore();
 
   return (
     <MantineHeader height={showSearch ? 110 : 70} p="md">
@@ -99,6 +102,7 @@ export const Header = () => {
           />
         )}
       </Box>
+      <Cart />
     </MantineHeader>
   );
 };

@@ -61,6 +61,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    orders        Order[]
 
     role UserRole @default(Client)
 }
@@ -159,4 +160,15 @@ model CarouselItem {
     carouselId String @db.ObjectId
 
     @@unique([name])
+}
+
+model Order {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    createdAt DateTime @default(now())
+
+    payload String
+
+    userId String @db.ObjectId // relation scalar field (used in the `@relation` attribute above)
+    User   User   @relation(fields: [userId], references: [id])
 }

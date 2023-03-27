@@ -5,6 +5,7 @@ import { categoryRouter } from "@/server/api/routers/category";
 import { labelRouter } from "@/server/api/routers/label";
 import { variantRouter } from "@/server/api/routers/variant";
 import { carouselRouter } from "@/server/api/routers/carousel";
+import { paypalRouter } from "@/server/api/routers/paypal";
 
 /**
  * This is the primary router for your server.
@@ -17,7 +18,8 @@ export const appRouter = createTRPCRouter({
   category: categoryRouter,
   label: labelRouter,
   variant: variantRouter,
-  carousel: carouselRouter
+  carousel: carouselRouter,
+  paypal: paypalRouter,
 });
 
 // export type definition of API
